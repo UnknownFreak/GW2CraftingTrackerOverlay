@@ -1,0 +1,6 @@
+GW2APIComponent.sdf
+GW2APIComponent/bin/*
+GW2APIComponent/obj/*
+OverlayApp/bin/*
+OverlayApp/obj/*
+.vs/*

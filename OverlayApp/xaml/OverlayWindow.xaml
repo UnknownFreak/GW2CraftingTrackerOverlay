@@ -1,0 +1,24 @@
+﻿<Window
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:OverlayApp" x:Class="OverlayApp.OverlayWindow"
+    Height="305" Width="330" ResizeMode="CanResizeWithGrip" Foreground="Black" MouseDown="Overlay_MouseDown" Opacity="0.8" Topmost="True" Background="#004D4D4D" Closing="Window_Closing" Loaded="Window_Loaded" BorderBrush="#CC000000" BorderThickness="1" Title="Overlay" WindowStyle="None" AllowsTransparency="True">
+    <Grid>
+        <local:OverlayInfo x:Name="OverlayInfo" Margin="0,22,0,0"/>
+        <Rectangle x:Name="TitleRect" Fill="#7FF4F4F5" Height="22" Stroke="Black" VerticalAlignment="Top" Opacity="0.8" IsEnabled="False"/>
+        <Expander x:Name="MenuExpander" Header="" HorizontalAlignment="Left" VerticalAlignment="Top" Width="298" Height="25" ExpandDirection="Right">
+            <Grid>
+                <Menu x:Name="MenuBar" VerticalAlignment="Top" Background="{x:Null}" Margin="0,0,43,0">
+                    <MenuItem Header="Overlay" Background="#FF7E7E7E">
+                        <CheckBox x:Name="MoveMode" Content="Move" IsChecked="True" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked"/>
+                        <CheckBox x:Name="ResizeMode_" Content="Resize" IsChecked="True" Checked="ResizeMode__Checked" Unchecked="ResizeMode__Checked"/>
+                        <Separator/>
+                        <MenuItem Header="Exit" Click="MenuItem_Click" Background="#00000000" BorderBrush="#00000000"/>
+                    </MenuItem>
+                    <MenuItem Header="Settings" Click="Options_Clicked" Background="#FF7E7E7E" BorderBrush="#00000000"/>
+                    <MenuItem Header="Open Item Manager" Click="ManageItems" Background="#FF7E7E7E"/>
+                </Menu>
+            </Grid>
+        </Expander>
+        <local:ErrorInfo x:Name="ErrorInfo" Height="22" VerticalAlignment="Top" Width="22" HorizontalAlignment="Right"/>
+    </Grid>
+</Window>
