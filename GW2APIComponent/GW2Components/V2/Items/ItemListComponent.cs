@@ -78,7 +78,7 @@ namespace GW2APIComponent.GW2Components.V2.Items
                 if (!itemNames.ContainsKey(itm.ID))
                 {
                     itemNames.Add(itm.ID, itm.name);
-                    onAdd?.Invoke(this,"Items Added: "+itemNames.Count+"/"+items.Count);
+                    onAdd?.Invoke(this,"Items Added: "+itemNames.Count+"/"+itemIDs.Count);
                 }
                 else
                     count++;
