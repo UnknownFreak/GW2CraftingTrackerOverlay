@@ -28,8 +28,9 @@ namespace GW2APIComponent.GW2Components.V2.Account.Inventory
         {
             uint count = 0;
             foreach(Characters.Inventory inv in accountInventory)
-                if(inv.id == itemID)
-                    count += inv.count;
+            if(inv != null)
+                    if (inv.id == itemID)
+                        count += inv.count;
             return count;
         }
         public override void update()

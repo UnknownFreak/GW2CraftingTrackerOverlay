@@ -74,7 +74,14 @@ namespace OverlayApp
                     }
                 }
             }
-            setUpDataGridView("");
+            try
+            {
+                setUpDataGridView("");
+            }
+            catch
+            {
+
+            }
         }
 
         private void saveitems()
@@ -402,6 +409,23 @@ namespace OverlayApp
                 itemList.Nodes.Clear();
                 itemList.Nodes.AddRange(ltn.ToArray());
             }
+        }
+
+        private void removeSelectedProject_Click(object sender, EventArgs e)
+        {
+            itemProjectList.Items.Remove(editProject.projectName);
+            overlay.OverlayInfo.removeItemProject(editProject);
+            itemList.Nodes.Clear();
+        }
+
+        private void clearAllProjects_Click(object sender, EventArgs e)
+        {
+            foreach (string str in itemProjectList.Items)
+            {
+                overlay.OverlayInfo.removeItemProject(overlay.OverlayInfo.getItemProject(str));
+            }
+            itemProjectList.Items.Clear();
+            itemProjectList.Items.Add("<New Project>");
         }
     }
 }

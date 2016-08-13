@@ -21,11 +21,11 @@ namespace GW2APIComponent.GW2Components.V2.Items
         {
             if (itemNames.Count != itemIDs.Count)
                 return requestItemNames((uint)itemNames.Count / 200);
-            return false;
+            return true;
         }
         public int getMaxPages()
         {
-            return itemNames.Count / 200;
+            return itemIDs.Count / 200;
         }
         public Item getItem(uint itemID)
         {

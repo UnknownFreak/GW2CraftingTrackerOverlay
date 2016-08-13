@@ -51,6 +51,19 @@ namespace OverlayApp
                 foreach (ItemRecipe ir in ip.items)
                     ItemList.Items.Add(ir.getItemRecipeAsTreeItem());
         }
+        public void removeItemProject(ItemProject project)
+        {
+            projects.Remove(project);
+            ItemList.Items.Clear();
+            foreach (ItemProject ip in projects)
+                foreach (ItemRecipe ir in ip.items)
+                    ItemList.Items.Add(ir.getItemRecipeAsTreeItem());
+        }
+        public void clearItemProjects()
+        {
+            projects.Clear();
+            ItemList.Items.Clear();
+        }
         public void updateItemCount()
         {
             foreach (ItemProject ip in projects)
