@@ -30,7 +30,7 @@ namespace OverlayApp
         /// <summary>
         /// Initializes a ErrorInfo with a error message
         /// </summary>
-        /// <param name="errorMessages">The message text that will be displayed in the hover tooltip</param>
+        /// <param name="errorMessages">A list of text that will be displayed in the hover tooltip</param>
         public ErrorInfo(List<string> errorMessages)
         {
             InitializeComponent();

@@ -288,7 +288,6 @@ namespace OverlayApp
             }
         }
 
-
         private void setUpDataGridView(string search)
         {
             Invoke((MethodInvoker)delegate

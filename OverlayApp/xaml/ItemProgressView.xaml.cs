@@ -14,10 +14,18 @@ namespace OverlayApp
         short i=0;
         System.Timers.Timer t = new System.Timers.Timer(5000);
         ItemRecipe ir;
+
+        /// <summary>
+        /// Default ctor.
+        /// </summary>
         public ItemProgressView()
         {
             InitializeComponent();
         }
+        /// <summary>
+        /// Initializes a progress view.
+        /// </summary>
+        /// <param name="_ir">The item recipe to have the progress view to track.</param>
         public ItemProgressView(ItemRecipe _ir)
         {
             ir = _ir;
@@ -36,18 +44,21 @@ namespace OverlayApp
             if(ir.aquireIcons.Count == 1)
             {
                 t.Stop();
-                CraftingIcons.Source = getNextIcon();
+                CraftingIcons.Source = getNextCraftingIcon();
             }
         }
 
         void t_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            this.Dispatcher.Invoke(new Action(() =>
+            Dispatcher.Invoke(new Action(() =>
             {
                 TimeSpan ts = new TimeSpan(0,0,1);
-                CraftingIcons.ChangeSource(getNextIcon(),ts,ts);
+                CraftingIcons.ChangeSource(getNextCraftingIcon(),ts,ts);
             }));
         }
+        /// <summary>
+        /// Updates the view with new information.
+        /// </summary>
         public void update()
         {
             ItemName.Content = ir.name;
@@ -62,12 +73,20 @@ namespace OverlayApp
             Progress.Maximum = ir.totalCount;
             ProgressLabel.Content = ir.current + "/" + ir.totalCount;
         }
+        /// <summary>
+        /// Updates the view with new information.
+        /// </summary>
+        /// <param name="obj">The object to use to fetch new information.</param>
         public void update(GW2APIComponent.GW2Object obj)
         {
             ir.updateItemCount(obj);
             update();
         }
-        public BitmapImage getNextIcon()
+        /// <summary>
+        /// Gets the next icon for the crafting professions.
+        /// </summary>
+        /// <returns></returns>
+        public BitmapImage getNextCraftingIcon()
         {
             i++;
             if (ir.aquireIcons.Count == 0)

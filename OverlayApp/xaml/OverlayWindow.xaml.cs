@@ -12,7 +12,6 @@ namespace OverlayApp
     {
         OverlayManager mgr = null;
         Timer updateThread;
-        bool running = true;
         public OverlayWindow()
         {
             InitializeComponent();
@@ -20,7 +19,11 @@ namespace OverlayApp
             OverlayInfo.onError += OverlayInfo_onError;
             Closing += OverlayInfo.UserControl_Unloaded;
         }
-
+        /// <summary>
+        /// Sets an error message onto the overlay. Overrides the previous error.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">The error information message, null to clear the message.</param>
         void OverlayInfo_onError(object sender, ErrorInfo e)
         {
             Dispatcher.Invoke(new Action(() =>
@@ -42,14 +45,17 @@ namespace OverlayApp
             if (e.ButtonState == MouseButtonState.Pressed && e.ChangedButton == MouseButton.Left && Properties.Settings.Default.MoveMode)
                 DragMove();
         }
+        /// <summary>
+        /// Used to change the timer update time for the updateThread.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void onTimerUpdateChange(object sender, EventArgs e)
         {
             updateThread.Change(new TimeSpan(0), Properties.Settings.Default.UpdateTime);
-
         }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            running = false;
             updateThread.Dispose();
             if(mgr != null)
             {

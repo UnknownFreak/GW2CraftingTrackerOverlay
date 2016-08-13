@@ -31,11 +31,17 @@ namespace OverlayApp
             accountInfo = obj.AddComponent<AccountComponent>(null);
             loadItemProjects();
         }
+        /// <summary>
+        /// Loads item projects from saved data file.
+        /// </summary>
         public void loadItemProjects()
         {
             Serialize.Serializer.DeSerializeObject(out projects,fileName);
             reloadProjects();
         }
+        /// <summary>
+        /// Reloads the item projects.
+        /// </summary>
         public void reloadProjects()
         {
             ItemList.Items.Clear();
@@ -43,6 +49,10 @@ namespace OverlayApp
                 foreach (ItemRecipe ir in ip.items)
                     ItemList.Items.Add(ir.getItemRecipeAsTreeItem());
         }
+        /// <summary>
+        /// Adds a item project to the information window.
+        /// </summary>
+        /// <param name="project">The desired project to add.</param>
         public void addItemProject(ItemProject project)
         {
             projects.Add(project);
@@ -51,6 +61,10 @@ namespace OverlayApp
                 foreach (ItemRecipe ir in ip.items)
                     ItemList.Items.Add(ir.getItemRecipeAsTreeItem());
         }
+        /// <summary>
+        /// Removes a item project from the information window.
+        /// </summary>
+        /// <param name="project">The desired project to remove.</param>
         public void removeItemProject(ItemProject project)
         {
             projects.Remove(project);
@@ -59,11 +73,17 @@ namespace OverlayApp
                 foreach (ItemRecipe ir in ip.items)
                     ItemList.Items.Add(ir.getItemRecipeAsTreeItem());
         }
+        /// <summary>
+        /// Removes all item projects added to this window.
+        /// </summary>
         public void clearItemProjects()
         {
             projects.Clear();
             ItemList.Items.Clear();
         }
+        /// <summary>
+        /// Updates the number of items the current projects contains.
+        /// </summary>
         public void updateItemCount()
         {
             foreach (ItemProject ip in projects)
@@ -74,6 +94,9 @@ namespace OverlayApp
                 }
             }
         }
+        /// <summary>
+        /// Updates the item projects.
+        /// </summary>
         public void updateItemProjects()
         {
             try
@@ -134,10 +157,17 @@ namespace OverlayApp
             }
             catch { }
         }
+        /// <summary>
+        /// Sets the API key to use.
+        /// </summary>
+        /// <param name="str">The API key.</param>
         public void setAPIKey(string str)
         {
             apikey.setAPIKey(str);
         }
+        /// <summary>
+        /// Updates the account information.
+        /// </summary>
         public void updateAccountInformation()
         {
             try
@@ -169,10 +199,19 @@ namespace OverlayApp
         {
             Serialize.Serializer.SerializeObject(projects, fileName);
         }
+        /// <summary>
+        /// Gets item project from name.
+        /// </summary>
+        /// <param name="name">The name of the item project to find.</param>
+        /// <returns>Item project if exists.</returns>
         public ItemProject getItemProject(string name)
         {
             return projects.Find(x => x.projectName == name);
         }
+        /// <summary>
+        /// Gets a list of item project names.
+        /// </summary>
+        /// <returns>List of strings containing the names.</returns>
         public List<string> getItemProjectNames()
         {
             return projects.ConvertAll(x => x.projectName);
