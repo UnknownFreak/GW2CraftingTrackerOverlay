@@ -8,9 +8,6 @@ namespace OverlayApp
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
-
-        //public static Properties.Settings settings;
-
         [STAThread]
         static void Main()
         {
