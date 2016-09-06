@@ -14,7 +14,9 @@ namespace GW2APIComponent.GW2Components.Strings
             { "Weaponsmith"     , "https://render.guildwars2.com/file/AEEF1CF774EE0D5917D5E1CF3AAC269FEE5EC03A/102460.png" },
             { "Huntsman"        , "https://render.guildwars2.com/file/0C91017241F016EF35A2BCCE183CA9F7374023FC/102462.png" },
             { "Chef"            , "https://render.guildwars2.com/file/424E410B90DE300CEB4A1DE2AB954A287C7A5419/102465.png" },
-            { "Merchant"        , "https://render.guildwars2.com/file/061298EB40D97DEC6C73F7631BE2393ECAB50B4E/240662.png" }
+            { "Merchant"        , "https://render.guildwars2.com/file/061298EB40D97DEC6C73F7631BE2393ECAB50B4E/240662.png" },
+            { "Scribe"          , "https://render.guildwars2.com/file/F95DFA3FBDCC9E9F317551A903E5A2A6DF1CC7E3/1293677.png" }
+
         }; 
     }
 }
