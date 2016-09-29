@@ -13,6 +13,7 @@ namespace OverlayApp
     {
         short i=0;
         System.Timers.Timer t = new System.Timers.Timer(5000);
+        System.Timers.Timer costTimer = new System.Timers.Timer(15000);
         ItemRecipe ir;
 
         /// <summary>
@@ -46,6 +47,11 @@ namespace OverlayApp
                 t.Stop();
                 CraftingIcons.Source = getNextCraftingIcon();
             }
+
+            costTimer.Elapsed += cost_Elapsed;
+            costTimer.AutoReset = true;
+            costTimer.Start();
+
         }
 
         void t_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
@@ -56,11 +62,43 @@ namespace OverlayApp
                 CraftingIcons.ChangeSource(getNextCraftingIcon(),ts,ts);
             }));
         }
+
+        void cost_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            Dispatcher.Invoke(new Action(() =>
+            {
+                //TimeSpan ts = new TimeSpan(0, 0, 5);
+
+                if (ir.priceList == CostToList.COST_BUY_NOW)
+                {
+                    ir.priceList = CostToList.COST_BUY_NOW_STACK;
+                    EstimatedCost.Content = "Est Buy Cost: " + longToGold(ir.tpCost.costBuyNow) + " ea";
+                }
+                else if (ir.priceList == CostToList.COST_BUY_NOW_STACK)
+                {
+                    ir.priceList = CostToList.COST_BUY_ORDER;
+                    EstimatedCost.Content = "Est Buy Cost: " + longToGold(ir.tpCost.costBuyNowStack) + " stack";
+                }
+                else if (ir.priceList == CostToList.COST_BUY_ORDER)
+                {
+                    ir.priceList = CostToList.COST_BUY_ORDER_STACK;
+                    EstimatedCost.Content = "Est Order Cost: " + longToGold(ir.tpCost.costPlaceOrder) + " ea";
+                }
+                else if (ir.priceList == CostToList.COST_BUY_ORDER_STACK)
+                {
+                    ir.priceList = CostToList.COST_BUY_NOW;
+                    EstimatedCost.Content = "Est Order Cost: " + longToGold(ir.tpCost.costPlaceOrderStack) + " stack";
+                }
+
+            }));
+        }
+
         /// <summary>
         /// Updates the view with new information.
         /// </summary>
         public void update()
         {
+
             ItemName.Content = ir.name;
             if(Image.Source == null)
                 try
@@ -73,6 +111,17 @@ namespace OverlayApp
             Progress.Maximum = ir.totalCount;
             ProgressLabel.Content = ir.current + "/" + ir.totalCount;
         }
+
+        private string longToGold(long _gold)
+        {
+            long gold = _gold / 10000;
+            long silver = (_gold / 100) - gold * 100;
+            long copper = (_gold) - (silver * 100) - (gold * 10000);
+            string text = gold.ToString() + "g " + silver.ToString() + "s " + copper.ToString() + "c";
+            return text;
+        }
+
+
         /// <summary>
         /// Updates the view with new information.
         /// </summary>
@@ -100,6 +149,8 @@ namespace OverlayApp
         {
             t.Stop();
             t.Dispose();
+            costTimer.Stop();
+            costTimer.Dispose();
         }
     }
 }

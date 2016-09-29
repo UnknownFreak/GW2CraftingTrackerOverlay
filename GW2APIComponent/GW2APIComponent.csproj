@@ -72,6 +72,7 @@
     <Compile Include="GW2Components\V2\Account\Inventory\InventoryRequestComponent.cs" />
     <Compile Include="GW2Components\V2\Account\Materials\MaterialStorageItem.cs" />
     <Compile Include="GW2Components\V2\Account\Materials\MaterialStorageRequestComponent.cs" />
+    <Compile Include="GW2Components\V2\Account\Transactions\Transaction.cs" />
     <Compile Include="GW2Components\V2\Items\Interfaces\IArmor.cs" />
     <Compile Include="GW2Components\V2\Items\Interfaces\IBack.cs" />
     <Compile Include="GW2Components\V2\Items\Interfaces\IBag.cs" />
@@ -89,6 +90,8 @@
     <Compile Include="GW2Components\V2\Items\Items.cs" />
     <Compile Include="GW2Components\V2\Recipes\Recipe.cs" />
     <Compile Include="GW2Components\V2\Recipes\RecipeRequestComponent.cs" />
+    <Compile Include="GW2Components\V2\Trading\ItemTradeComponent.cs" />
+    <Compile Include="GW2Components\V2\Trading\Trading.cs" />
     <Compile Include="GW2Object.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
