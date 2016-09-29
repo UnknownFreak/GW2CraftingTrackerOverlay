@@ -25,5 +25,7 @@
         public static readonly uint BankRequestComponent = 9;
         /// <summary></summary>
         public static readonly uint MaterialStorageRequestComponent = 10;
+        /// <summary></summary>
+        public static readonly uint ItemTradeComponent = 11;
     }
 }

@@ -5,6 +5,14 @@ using System.Windows.Forms;
 
 namespace OverlayApp
 {
+    public enum CostToList
+    {
+        COST_BUY_NOW = 0,
+        COST_BUY_NOW_STACK = 1,
+        COST_BUY_ORDER = 2,
+        COST_BUY_ORDER_STACK = 3,
+    }
+
     [Serializable]
     public class ItemRecipe
     {
@@ -15,7 +23,9 @@ namespace OverlayApp
         public uint totalCount = 0;
         public uint current = 0;
 
-        public TPinfo tpCost;
+        public CostToList priceList = CostToList.COST_BUY_NOW;
+
+        public TPinfo tpCost = new TPinfo();
         public List<string> aquireIcons = new List<string>();
         public List<ItemRecipe> requiredItems = new List<ItemRecipe>();
         TreeViewItem tvi = null;
@@ -58,6 +68,14 @@ namespace OverlayApp
         public void updateItemCount(GW2APIComponent.GW2Object obj)
         {
             current = obj.GetComponent<GW2APIComponent.GW2Components.V2.Account.AccountComponent>().getTotalItemCount(itemID);
+            if (obj.GetComponent<GW2APIComponent.GW2Components.V2.Trading.ItemTradeComponent>().isItemTradable(itemID))
+            {
+                GW2APIComponent.GW2Components.V2.Trading.ItemTradePrice trade = obj.GetComponent<GW2APIComponent.GW2Components.V2.Trading.ItemTradeComponent>().getItemPrice(itemID);
+                tpCost.costBuyNow = trade.sells.unitPrice;
+                tpCost.costBuyNowStack = trade.sells.unitPrice * (totalCount - current);
+                tpCost.costPlaceOrder = trade.buys.unitPrice;
+                tpCost.costPlaceOrderStack = trade.buys.unitPrice * (totalCount - current);
+            }
             updateSubItems(obj);
         }
         public void updateSubItems(GW2APIComponent.GW2Object obj)

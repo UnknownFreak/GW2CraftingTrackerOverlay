@@ -15,7 +15,7 @@
         <ProgressBar x:Name="Progress" Margin="0,13,0,0" Value="50" IsHitTestVisible="False" Grid.Column="1"/>
         <Label x:Name="ItemName" Margin="-4,-8,0,0" Foreground="White" IsHitTestVisible="False" Content="Some super mega long name for display testing" Grid.ColumnSpan="2" VerticalAlignment="Top" Height="26" Grid.Column="1" HorizontalAlignment="Left"/>
         <Label x:Name="ProgressLabel" Content="12345/67890" Margin="0,7,0,-5" Foreground="Black" FontSize="9" HorizontalContentAlignment="Center" Background="#00000000" IsHitTestVisible="False" Grid.Column="1"/>
-        <Label x:Name="EstimatedCost" Margin="12,7,0,-5" Grid.Column="2" FontSize="9" Foreground="White" Content="Est Cost" HorizontalAlignment="Left" Width="42"/>
+        <Label x:Name="EstimatedCost" Margin="12,7,0,-5" Grid.Column="2" FontSize="9" Foreground="White" Content="Est Cost" HorizontalAlignment="Left" Width="146"/>
         <Ellipse HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="24">
             <Ellipse.Fill>
                 <ImageBrush ImageSource="{Binding Source, ElementName=Image}"/>

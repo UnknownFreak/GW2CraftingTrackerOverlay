@@ -6,6 +6,7 @@ using GW2APIComponent.GW2Components;
 using GW2APIComponent.GW2Components.V2.Account;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using GW2APIComponent.GW2Components.V2.Trading;
 
 namespace OverlayApp
 {
@@ -29,6 +30,7 @@ namespace OverlayApp
             apikey = obj.AddComponent<APIKeyInfoComponent>(o);
             permissions = obj.AddComponent<APIKeyPermissionsComponent>(null);
             accountInfo = obj.AddComponent<AccountComponent>(null);
+            obj.AddComponent<ItemTradeComponent>(null);
             loadItemProjects();
         }
         /// <summary>
