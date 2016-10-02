@@ -13,7 +13,7 @@ namespace GW2APIComponent.BaseComponents
         /// Gets the typeID for that component
         /// </summary>
         /// <returns>TypeID</returns>
-        public abstract UInt32 getType();
+        public abstract uint getType();
         /// <summary>
         /// Gets the typeName for that component
         /// </summary>
