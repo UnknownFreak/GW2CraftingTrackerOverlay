@@ -58,7 +58,7 @@ namespace GW2APIComponent.GW2Components.V2.Items
                                 }
                                 requestItemNames(tmp);
                                 Thread.Sleep(5);
-                            });
+                            },cs);
                     else
                         tasks[i].ContinueWith((antecendent) =>
                         {
@@ -70,7 +70,7 @@ namespace GW2APIComponent.GW2Components.V2.Items
                             }
                             requestItemNames(tmp);
                             Thread.Sleep(5);
-                        }); // Antecedent data is ignored
+                        },cs); // Antecedent data is ignored
                 }
                 tasks[i].Start();
             }
