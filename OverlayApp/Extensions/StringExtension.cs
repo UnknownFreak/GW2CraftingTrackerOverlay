@@ -6,6 +6,8 @@
         public static bool Contains(this string str, string substring,
                                     StringComparison comp)
         {
+            if (str == null)
+                throw new ArgumentNullException("str", "str cannot be null.");
             if (substring == null)
                 throw new ArgumentNullException("substring",
                                                 "substring cannot be null.");

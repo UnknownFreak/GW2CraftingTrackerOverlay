@@ -7,11 +7,15 @@ using System.Windows.Forms;
 using GW2APIComponent;
 using GW2APIComponent.GW2Components.V2.Items;
 using GW2APIComponent.GW2Components.V2.Recipes;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace OverlayApp
 {
     public partial class OverlayManager : Form
     {
+        LogWindow logger = new LogWindow();
+
         ItemProject newProject = new ItemProject();
         ItemProject editProject;
         ItemRecipe editItem = null;
@@ -23,8 +27,14 @@ namespace OverlayApp
         List<string> additemStrings = new List<string>();
         OverlayWindow overlay;
 
+        CancellationTokenSource token = new CancellationTokenSource();
+        CancellationToken cancelToken;
         public OverlayManager(OverlayWindow myOverlay)
         {
+            cancelToken = token.Token;
+            //Initialize logging for components
+            GW2APIComponent.BaseComponents.BaseComponent.logging += BaseComponent_logging;
+
             //setOverlayParent;
             overlay = myOverlay;
             
@@ -45,6 +55,11 @@ namespace OverlayApp
             editProject = newProject;
         }
 
+        private void BaseComponent_logging(object sender, string e)
+        {
+            Logger.Logger.Log(e,Logger.Logger.MessageType.ComponentInfo);
+        }
+
         void list_onAdd(object sender, string e)
         {
             Invoke((MethodInvoker)delegate
@@ -55,6 +70,7 @@ namespace OverlayApp
 
         void OverlayManager_Disposed(object sender, EventArgs e)
         {
+            token.Cancel();
             saveitems();
             Properties.Settings.Default.Save();
         }
@@ -185,6 +201,7 @@ namespace OverlayApp
                 var recipes = recipe.requestMysticForgeRecipe(recipeID);
                 if (recipes.Count != 0)
                 {
+                    // make a recipe selector here.
                     if (recipes.Count > 1)
                     {
                         myrecipe = recipes[0];
@@ -303,32 +320,24 @@ namespace OverlayApp
         #region WorkerThreads
         private void itemListFetcher_DoWork(object sender, DoWorkEventArgs e)
         {
+
             BackgroundWorker worker = sender as BackgroundWorker;
-            bool isdone = false;
-            if ((e.Argument as string) == "FetchMissingItems")
-            {
-                list.getAllItemNames();
-            }
-            else
-            {
-                loaditems();
-                while (!isdone)
-                {
-                    if (worker.CancellationPending)
-                    {
-                        e.Cancel = true;
-                        return;
-                    }
-                    isdone = list.checkForAddedItems();
-                    worker.ReportProgress(0);
-                }
-            }
+
+            loaditems();
+
+            Task []tasks = list.CreateItemFetchingTasks(cancelToken);
+
+            
             try
             {
-                setUpDataGridView("");
+                Task.WaitAll(tasks);
             }
-            catch (ObjectDisposedException)
-            { return; }
+            catch (ObjectDisposedException ex)
+            {
+                Logger.Logger.Log(ex.Message, Logger.Logger.MessageType.Error);
+                return;
+            }
+            Logger.Logger.Log("Fetching items done!", Logger.Logger.MessageType.Info);
         }
 
         private void itemListFetcher_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -339,7 +348,7 @@ namespace OverlayApp
         {
             if(e.Equals(e.Error))
             {
-                MessageBox.Show(e.Error.Message);
+                Logger.Logger.Log(e.Error.Message, Logger.Logger.MessageType.Error);
             }
         }
         private void AddItemWorker_DoWork(object sender, DoWorkEventArgs e)
@@ -349,10 +358,11 @@ namespace OverlayApp
 
             while (!isdone)
             {
-                System.Threading.Thread.Sleep(70);
+                Thread.Sleep(70);
                 if (worker.CancellationPending)
                 {
                     e.Cancel = true;
+                    Logger.Logger.Log("Canceling adding items", Logger.Logger.MessageType.Info);
                     return;
                 }
                 if (additemStrings.Count != 0)
@@ -368,8 +378,9 @@ namespace OverlayApp
                             addItemStatusLabel.Text = "";
                         });
                     }
-                catch (ObjectDisposedException)
+                catch (InvalidOperationException)
                     {
+                        Logger.Logger.Log("Invalid operation setting statusLabel", Logger.Logger.MessageType.Info);
                         return;
                     }
 
@@ -385,13 +396,6 @@ namespace OverlayApp
             }
             public UInt32 ID { get; set; }
             public string ItemName { get; set; }
-        }
-
-        private void fetchMissingItemsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (itemListFetcher.IsBusy)
-                itemListFetcher.CancelAsync();
-            itemListFetcher.RunWorkerAsync("FetchMissingItems");
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -425,6 +429,11 @@ namespace OverlayApp
             }
             itemProjectList.Items.Clear();
             itemProjectList.Items.Add("<New Project>");
+        }
+
+        private void logToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            logger.Show();
         }
     }
 }

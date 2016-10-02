@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Runtime.CompilerServices;
 using System.Runtime.Serialization.Json;
 
 namespace GW2APIComponent.BaseComponents
@@ -9,6 +10,11 @@ namespace GW2APIComponent.BaseComponents
     /// </summary>
     public abstract class BaseComponent
     {
+        /// <summary>
+        /// static EventHandler to help log errors and information to a logger.
+        /// </summary>
+        public static event EventHandler<string> logging = null;
+
         /// <summary>
         /// Gets the typeID for that component
         /// </summary>
@@ -41,6 +47,13 @@ namespace GW2APIComponent.BaseComponents
         {
             return attachedOn.GetComponent<T>();
         }
+
+        protected void log(string msg)
+        {
+            logging?.Invoke(null, msg);
+        }
+
+
         /// <summary>
         /// Reeusts JSON data from the web.
         /// </summary>
@@ -59,6 +72,7 @@ namespace GW2APIComponent.BaseComponents
                 }
                 catch (System.Net.WebException)
                 {
+                    logging?.Invoke(null, "Failed to request JSON data");
                     throw;
                 }
                 finally
