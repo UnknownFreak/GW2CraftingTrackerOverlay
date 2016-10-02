@@ -81,12 +81,12 @@
             this.itemNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridInfoBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.fetchMissingItemsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.logToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.itemProjectList = new System.Windows.Forms.ListBox();
-            this.label17 = new System.Windows.Forms.Label();
             this.itemProjectMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.removeSelectedProject = new System.Windows.Forms.ToolStripMenuItem();
             this.clearAllProjects = new System.Windows.Forms.ToolStripMenuItem();
+            this.label17 = new System.Windows.Forms.Label();
             this.statusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.statusStrip2.SuspendLayout();
@@ -568,19 +568,19 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fetchMissingItemsToolStripMenuItem});
+            this.logToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1010, 24);
             this.menuStrip1.TabIndex = 9;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // fetchMissingItemsToolStripMenuItem
+            // logToolStripMenuItem
             // 
-            this.fetchMissingItemsToolStripMenuItem.Name = "fetchMissingItemsToolStripMenuItem";
-            this.fetchMissingItemsToolStripMenuItem.Size = new System.Drawing.Size(124, 20);
-            this.fetchMissingItemsToolStripMenuItem.Text = "Fetch Missing Items";
-            this.fetchMissingItemsToolStripMenuItem.Click += new System.EventHandler(this.fetchMissingItemsToolStripMenuItem_Click);
+            this.logToolStripMenuItem.Name = "logToolStripMenuItem";
+            this.logToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+            this.logToolStripMenuItem.Text = "Log";
+            this.logToolStripMenuItem.Click += new System.EventHandler(this.logToolStripMenuItem_Click);
             // 
             // itemProjectList
             // 
@@ -594,22 +594,13 @@
             this.itemProjectList.TabIndex = 15;
             this.itemProjectList.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(226, 24);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(68, 13);
-            this.label17.TabIndex = 16;
-            this.label17.Text = "Item Projects";
-            // 
             // itemProjectMenuStrip
             // 
             this.itemProjectMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.removeSelectedProject,
             this.clearAllProjects});
             this.itemProjectMenuStrip.Name = "contextMenuStrip1";
-            this.itemProjectMenuStrip.Size = new System.Drawing.Size(205, 70);
+            this.itemProjectMenuStrip.Size = new System.Drawing.Size(205, 48);
             // 
             // removeSelectedProject
             // 
@@ -624,6 +615,15 @@
             this.clearAllProjects.Size = new System.Drawing.Size(204, 22);
             this.clearAllProjects.Text = "Clear All Projects";
             this.clearAllProjects.Click += new System.EventHandler(this.clearAllProjects_Click);
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(226, 24);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(68, 13);
+            this.label17.TabIndex = 16;
+            this.label17.Text = "Item Projects";
             // 
             // OverlayManager
             // 
@@ -717,7 +717,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn iDDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn itemNameDataGridViewTextBoxColumn;
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem fetchMissingItemsToolStripMenuItem;
         private System.Windows.Forms.ListBox itemProjectList;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox projectNameField;
@@ -725,5 +724,6 @@
         private System.Windows.Forms.ContextMenuStrip itemProjectMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem removeSelectedProject;
         private System.Windows.Forms.ToolStripMenuItem clearAllProjects;
+        private System.Windows.Forms.ToolStripMenuItem logToolStripMenuItem;
     }
 }

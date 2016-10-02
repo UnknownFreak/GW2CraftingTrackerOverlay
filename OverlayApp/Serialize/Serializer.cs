@@ -31,7 +31,7 @@ namespace OverlayApp.Serialize
             }
             catch(Exception ex)
             {
-
+                Logger.Logger.Log(ex.Message, Logger.Logger.MessageType.Error);
             }
         }
         /// <summary>
@@ -66,7 +66,7 @@ namespace OverlayApp.Serialize
             } 
             catch (Exception ex)
             {
-
+                Logger.Logger.Log(ex.Message, Logger.Logger.MessageType.Error);
             }
         }
     }
