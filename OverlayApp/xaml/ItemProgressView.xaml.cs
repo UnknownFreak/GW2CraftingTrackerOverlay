@@ -51,7 +51,7 @@ namespace OverlayApp
             costTimer.Elapsed += cost_Elapsed;
             costTimer.AutoReset = true;
             costTimer.Start();
-
+            EstimatedCost.Content = "";
         }
 
         void t_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
@@ -69,25 +69,36 @@ namespace OverlayApp
             {
                 //TimeSpan ts = new TimeSpan(0, 0, 5);
 
+                string lable = "";
+
                 if (ir.priceList == CostToList.COST_BUY_NOW)
                 {
                     ir.priceList = CostToList.COST_BUY_NOW_STACK;
-                    EstimatedCost.Content = "Est Buy Cost: " + longToGold(ir.tpCost.costBuyNow) + " ea";
+                    lable = "Est Buy Cost: " + longToGold(ir.tpCost.costBuyNow) + " ea";
                 }
                 else if (ir.priceList == CostToList.COST_BUY_NOW_STACK)
                 {
                     ir.priceList = CostToList.COST_BUY_ORDER;
-                    EstimatedCost.Content = "Est Buy Cost: " + longToGold(ir.tpCost.costBuyNowStack) + " stack";
+                    lable = "Est Buy Cost: " + longToGold(ir.tpCost.costBuyNowStack) + " stack";
                 }
                 else if (ir.priceList == CostToList.COST_BUY_ORDER)
                 {
                     ir.priceList = CostToList.COST_BUY_ORDER_STACK;
-                    EstimatedCost.Content = "Est Order Cost: " + longToGold(ir.tpCost.costPlaceOrder) + " ea";
+                    lable = "Est Order Cost: " + longToGold(ir.tpCost.costPlaceOrder) + " ea";
                 }
                 else if (ir.priceList == CostToList.COST_BUY_ORDER_STACK)
                 {
                     ir.priceList = CostToList.COST_BUY_NOW;
-                    EstimatedCost.Content = "Est Order Cost: " + longToGold(ir.tpCost.costPlaceOrderStack) + " stack";
+                    lable = "Est Order Cost: " + longToGold(ir.tpCost.costPlaceOrderStack) + " stack";
+                }
+
+                if (ir.hideCost)
+                {
+                    EstimatedCost.Content = "";
+                }
+                else
+                {
+                    EstimatedCost.Content = lable;
                 }
 
             }));

@@ -24,6 +24,7 @@ namespace OverlayApp
         public uint current = 0;
 
         public CostToList priceList = CostToList.COST_BUY_NOW;
+        public bool hideCost = false;
 
         public TPinfo tpCost = new TPinfo();
         public List<string> aquireIcons = new List<string>();
@@ -68,13 +69,19 @@ namespace OverlayApp
         public void updateItemCount(GW2APIComponent.GW2Object obj)
         {
             current = obj.GetComponent<GW2APIComponent.GW2Components.V2.Account.AccountComponent>().getTotalItemCount(itemID);
-            if (obj.GetComponent<GW2APIComponent.GW2Components.V2.Trading.ItemTradeComponent>().isItemTradable(itemID))
+            if (obj.GetComponent<GW2APIComponent.GW2Components.V2.Trading.ItemTradeComponent>().isItemTradable(itemID) && (current < totalCount))
             {
+                uint tmc = (totalCount - current);
                 GW2APIComponent.GW2Components.V2.Trading.ItemTradePrice trade = obj.GetComponent<GW2APIComponent.GW2Components.V2.Trading.ItemTradeComponent>().getItemPrice(itemID);
                 tpCost.costBuyNow = trade.sells.unitPrice;
-                tpCost.costBuyNowStack = trade.sells.unitPrice * (totalCount - current);
+                tpCost.costBuyNowStack = trade.sells.unitPrice * tmc;
                 tpCost.costPlaceOrder = trade.buys.unitPrice;
-                tpCost.costPlaceOrderStack = trade.buys.unitPrice * (totalCount - current);
+                tpCost.costPlaceOrderStack = trade.buys.unitPrice * tmc;
+                hideCost = false;
+            }
+            else
+            {
+                hideCost = true;
             }
             updateSubItems(obj);
         }
